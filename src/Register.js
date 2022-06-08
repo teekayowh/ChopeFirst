@@ -15,6 +15,7 @@ function Register() {
   const history = useNavigate();
   const register = () => {
     if (!name) alert("Please enter name");
+    if (!email.includes("@u.nus.edu")) alert("Please only register with your NUS email");
     registerWithEmailAndPassword(name, email, password);
   };
   useEffect(() => {
@@ -63,11 +64,6 @@ function Register() {
               </div>
               <div class="d-grid mb-2">
                 <button class="btn btn-primary btn-register text-uppercase fw-bold"  onClick={register}>Register</button>
-              </div>
-              <div class="d-grid">
-                <button class="btn btn-google btn-register text-uppercase fw-bold"  onClick={signInWithGoogle}>
-                  <i class="fab fa-google me-2"></i> Register with Google
-                </button>
               </div>
           </div>
         </div>

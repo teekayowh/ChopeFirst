@@ -41,13 +41,10 @@ function Login() {
               <label for="floatingPassword">Password</label>
               </div>
               <div class="d-grid mb-2">
-                <button class="btn btn-primary btn-login text-uppercase fw-bold"  onClick={() => logInWithEmailAndPassword(email, password)}>Sign
+                <button class="btn btn-primary btn-login text-uppercase fw-bold"  onClick={() => 
+                email.includes("@u.nus.edu") ? logInWithEmailAndPassword(email, password) : alert("Please only sign in with your NUS email")}
+                  >Sign
                   in</button>
-              </div>
-              <div class="d-grid">
-                <button class="btn btn-google btn-login text-uppercase fw-bold"  onClick={signInWithGoogle}>
-                  <i class="fab fa-google me-2"></i> Sign in with Google
-                </button>
               </div>
               <hr class="my-4"></hr>
               <div class="d-grid mb-2">
