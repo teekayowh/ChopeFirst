@@ -20,7 +20,7 @@ function Register() {
   };
   useEffect(() => {
     if (loading) return;
-    if (user) history("/dashboard", { replace: true });
+    if (user) history("/home", { replace: true });
   }, [user, loading]);
   return (
     <div class="container">
