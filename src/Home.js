@@ -43,7 +43,7 @@ function Home() {
               <NavDropdown.Item href="#action/3.2">Statistics</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Contact us</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Sign out</NavDropdown.Item>
+              <NavDropdown.Item onClick={logout}>Sign out</NavDropdown.Item>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
