@@ -7,6 +7,10 @@ import Register from "./Register";
 import Reset from "./Reset";
 import Dashboard from "./Dashboard";
 import Home from "./Home";
+import UtownSlots from "./GymSlots/UtownSlots";
+import UscSlots from "./GymSlots/UscSlots";
+import KrmpshSlots from "./GymSlots/KrmpshSlots";
+import OutreachSlots from "./GymSlots/OutreachSlots";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -19,6 +23,10 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/reset" element={<Reset />} />
       <Route path ="/home" element={<Home />} />
+      <Route path ="/utownSlots" element={<UtownSlots />} />
+      <Route path ="/uscSlots" element={<UscSlots />} />
+      <Route path ="/krmpshSlots" element={<KrmpshSlots />} />
+      <Route path ="/outreachSlots" element={<OutreachSlots />} />
       {/* <Route path="/dashboard" element={<Dashboard />} /> */}
     </Routes>
   </BrowserRouter>

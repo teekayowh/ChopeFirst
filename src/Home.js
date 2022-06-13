@@ -6,7 +6,7 @@ import { auth, db, logout } from "./firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import Navbar from 'react-bootstrap/Navbar';
 import { Container, Nav, NavDropdown } from "react-bootstrap";
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBBtn, MDBRow, MDBCol, MDBContainer } from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBBtn, MDBRow, MDBCol, MDBContainer, MDBNavLink } from 'mdb-react-ui-kit';
 
 function Home() {
   const [user, loading, error] = useAuthState(auth);
@@ -62,7 +62,7 @@ function Home() {
               <MDBCardText>
                 Some quick example text to build on the card title and make up the bulk of the card's content.
               </MDBCardText>
-              <MDBBtn href='#'>Button</MDBBtn>
+              <MDBBtn href='/uscSlots'>Button</MDBBtn>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
@@ -76,7 +76,7 @@ function Home() {
               <MDBCardText>
                 Some quick example text to build on the card title and make up the bulk of the card's content.
               </MDBCardText>
-              <MDBBtn href='#'>Button</MDBBtn>
+              <MDBBtn href='/utownSlots'>Button</MDBBtn>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
@@ -90,7 +90,7 @@ function Home() {
               <MDBCardText>
                 Some quick example text to build on the card title and make up the bulk of the card's content.
               </MDBCardText>
-              <MDBBtn href='#'>Button</MDBBtn>
+              <MDBBtn href='/outreachSlots'>Button</MDBBtn>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
@@ -104,7 +104,7 @@ function Home() {
               <MDBCardText>
                 Some quick example text to build on the card title and make up the bulk of the card's content.
               </MDBCardText>
-              <MDBBtn href='#'>Button</MDBBtn>
+              <MDBBtn href='/krmpshSlots'>Button</MDBBtn>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
