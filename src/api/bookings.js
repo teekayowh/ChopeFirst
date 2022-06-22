@@ -5,15 +5,16 @@ import {
 import { doc, getDoc, setDoc, collection } from "firebase/firestore";
 
 async function getBookings() {
-    // const timeslotsRef = doc(db, "timeslots", "krmpsh");
-    // const docSnap = await getDoc(timeslotsRef);
+    const timeslotsRef = doc(db, "bookings");
+    const docSnap = await getDoc(timeslotsRef);
 
-    // if (!docSnap.exists()) {
-    //     console.log("No such document!");
-    //     return
-    // }
+    if (!docSnap.exists()) {
+        console.log("No such document!");
+        return
+    }
     
-    // return docSnap.data();
+    console.log(docSnap.data())
+    return docSnap.data();
 }
 
 async function createBookings(userId, venue, timeslot) {
