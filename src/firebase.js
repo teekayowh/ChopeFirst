@@ -16,15 +16,18 @@ import {
   where,
   addDoc,
 } from "firebase/firestore";
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDIXJ5YT7hoNbBFqK3TBcV41-TzIO-7n7w",
-  authDomain: "fir-auth-6edd8.firebaseapp.com",
-  projectId: "fir-auth-6edd8",
-  storageBucket: "fir-auth-6edd8.appspot.com",
-  messagingSenderId: "904760319835",
-  appId: "1:904760319835:web:44fd0d957f114b4e51447e",
-  measurementId: "G-Q4TYKH9GG7",
+  apiKey: "AIzaSyDGr2qhe-PP98xoy9zZDcUFEl0C-gMi200",
+  authDomain: "chopefirst-fb124.firebaseapp.com",
+  databaseURL: "https://chopefirst-fb124-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "chopefirst-fb124",
+  storageBucket: "chopefirst-fb124.appspot.com",
+  messagingSenderId: "660503552787",
+  appId: "1:660503552787:web:33f6dc4bb05b83ef3f30e6",
+  measurementId: "G-GP1S3H67SY"
 };
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
