@@ -18,12 +18,14 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCko0JnODlad9ojRX78xE4Fl403WLfcstM",
-  authDomain: "chope-first.firebaseapp.com",
-  projectId: "chope-first",
-  storageBucket: "chope-first.appspot.com",
-  messagingSenderId: "212638345262",
-  appId: "1:212638345262:web:f4881594d1d85ea32c17bf"
+  apiKey: "AIzaSyDGr2qhe-PP98xoy9zZDcUFEl0C-gMi200",
+  authDomain: "chopefirst-fb124.firebaseapp.com",
+  databaseURL: "https://chopefirst-fb124-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "chopefirst-fb124",
+  storageBucket: "chopefirst-fb124.appspot.com",
+  messagingSenderId: "660503552787",
+  appId: "1:660503552787:web:33f6dc4bb05b83ef3f30e6",
+  measurementId: "G-GP1S3H67SY"
 };
 
 const app = initializeApp(firebaseConfig);

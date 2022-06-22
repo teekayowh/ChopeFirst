@@ -16,7 +16,10 @@ function KrmpshSlots() {
     getTimeslots().then((slots) => {
       var temp = []
       for (var slot in slots) {
-        temp.push([slots[slot]['start'].toString(), slots[slot]['end'].toString()])
+        if (slots[slot]['capacity'] > 0) {
+          console.log(slots[slot]['capacity']);
+          temp.push([slots[slot]['start'].toString(), slots[slot]['end'].toString()])
+        }
       }
       setTimeslots(temp)
     })
@@ -34,9 +37,11 @@ function KrmpshSlots() {
       <h2>Operating Hours: 7am - 9pm</h2>
       <ReactTimeslotCalendar
         initialDate={moment().format("YYYY-MM-DD")}
-        timeslots={timeslots}
-        onSelectTimeslot = { (timeslots, lastSelected) => {
-
+        let
+        timeslots={timeslots} 
+        onSelectTimeslot = {(allTimeslots, lastSelectedTimeslot) => {
+          console.log(lastSelectedTimeslot.startDate);  // MomentJS object.
+ 
         }}
       />
     </div>
