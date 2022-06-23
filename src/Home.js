@@ -28,6 +28,8 @@ function Home() {
     if (!user) return navigate("/");
     fetchUserName();
   }, [user, loading]);
+
+  
   return (
     <>
     <Navbar bg="light" expand="lg">
@@ -40,7 +42,7 @@ function Home() {
             <Nav.Link href="#link">Announcements</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Upcoming Bookings</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Statistics</NavDropdown.Item>
+              <NavDropdown.Item onClick>Statistics</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Contact us</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={logout}>Sign out</NavDropdown.Item>
