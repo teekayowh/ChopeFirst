@@ -34,11 +34,11 @@ function Home() {
     <>
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">ChopeFirst</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/home">ChopeFirst</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#link">Facilities</Nav.Link>
+            <Nav.Link as={Link} to="/home">Facilities</Nav.Link>
             <Nav.Link href="#link">Announcements</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Upcoming Bookings</NavDropdown.Item>

@@ -1,7 +1,8 @@
 import "./UtownSlots.css";
 import ReactTimeslotCalendar from "react-timeslot-calendar";
 import moment from "moment";
-import { auth } from "../firebase";
+import { Link, useNavigate } from "react-router-dom";
+import { auth, logout } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
   getTimeslots, updateTimeslots, updateCapacity, checkCapacity
@@ -10,6 +11,8 @@ import{
   createBookings
 } from '../api/bookings'
 import { useState, useEffect } from "react";
+import Navbar from 'react-bootstrap/Navbar';
+import { Container, Nav, NavDropdown } from "react-bootstrap";
 
 
 function UtownSlots() {
@@ -92,6 +95,26 @@ const [day, setDay] = useState(0);
     format: 'MMMM Do YYYY, h:mm:ss A',
 }]
   return (
+    <div>
+    <Navbar bg="light" expand="lg">
+      <Container>
+        <Navbar.Brand as={Link} to="/home">ChopeFirst</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link as={Link} to="/home">Facilities</Nav.Link>
+            <Nav.Link href="#link">Announcements</Nav.Link>
+            <NavDropdown title="Account" id="basic-nav-dropdown">
+              <NavDropdown.Item href="#action/3.1">Upcoming Bookings</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/statistics">Statistics</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.3">Contact us</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={logout}>Sign out</NavDropdown.Item>
+            </NavDropdown>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
     <div className="UtownSlots">
       <h1>University Town Gym</h1>
       <h2>Operating Hours: 7am - 9pm</h2>
@@ -109,6 +132,7 @@ const [day, setDay] = useState(0);
         <button class="btn btn-primary text-uppercase fw-bold" onClick={handleSubmit}>Submit
         </button>
       </div>
+    </div>
     </div>
   );
 }
