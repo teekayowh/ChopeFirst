@@ -96,7 +96,7 @@ const [day, setDay] = useState(0);
 
 
   function handleSubmit() {
-    updateCapacity("utown", day, {'startDate': day["day"], 'format': 'MMMM Do YYYY, h:mm:ss A'})
+    updateCapacity("utown", day, {'startDate': day["day"], 'format': 'MMMM Do YYYY, h:mm:ss A'}, true)
     createBookings(user.uid, "utown" , {'start': startDate, 'end': endDate})
     updateTimeslots("utown", startTime, false);
     alert("Booking has been made")

@@ -2,28 +2,57 @@ import "./UpcomingBooking.css";
 import ReactTimeslotCalendar from "react-timeslot-calendar";
 import moment from "moment";
 import {
-  getTimeslots, updateTimeslots
+  getTimeslots, updateTimeslots, updateCapacity
 } from './api/timeslots'
 import{
   createBookings , getBookings, deleteBooking
 } from './api/bookings'
 import { useState, useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
+import { query, collection, getDocs, where } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Container, Nav, NavDropdown } from "react-bootstrap";
 import { auth, logInWithEmailAndPassword, signInWithGoogle, db, logout } from "./firebase";
 import { Link, useNavigate } from "react-router-dom";
 import Navbar from 'react-bootstrap/Navbar';
 
 
+
 function UpcomingBooking() {
   const [timeslots, setTimeslots] = useState([])
   const [keys, setKeys] = useState([])
+  const auth = getAuth();
+  const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = useState("");
+  const[userid, setID] = useState("") 
 
+  const fetchUserName = async () => {
+    try {
+      setID(user.uid);
+      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+      const doc = await getDocs(q);
+      const data = doc.docs[0].data();
+      setName(data.name);
+    } catch (err) {
+      console.error(err);
+      alert("An error occured while fetching user data");
+    }
+  };
   useEffect(() => {
+    if (loading) return;
+    if (!user) return navigate("/");
+    fetchUserName();
+  }, [user, loading]);
+
+  const navigate = useNavigate();
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+    console.log(userid);
     getBookings().then((slots) => {
       var temp = []
       for (var slot in slots) {
-        if (slots[slot]['userId'] === "59jvuZrl5RPGpYDTMoWvrD324cd2") {
+        if (slots[slot]['userId'] === user.uid) {
           temp.push(slots[slot]);
           console.log(Object.keys(slots));
           console.log(slots[slot]);
@@ -36,7 +65,10 @@ function UpcomingBooking() {
       }
       setTimeslots(temp)
       setKeys(Object.keys(slots))
-    })
+    } )
+  } else {
+    return navigate("/");
+  }
   }, [])
 
   console.log(timeslots);
@@ -49,6 +81,7 @@ function UpcomingBooking() {
         temp.splice(index, 1)
         updateTimeslots('krmpsh', 'slot1', true)
         setTimeslots(temp);
+        updateCapacity(card.venue, {"day": card.timeslot.start.startDate}, {'startDate': card.timeslot.start.startDate, 'format': 'MMMM Do YYYY, h:mm:ss A'}, false)
       })
     }
 
@@ -56,7 +89,7 @@ function UpcomingBooking() {
 
     return (
       
-      <Card style={{ width: "18rem" }} key={index} className="box">
+      <Card style={{ width: "18rem" }} key={index} className="box mx-auto">
         <Card.Body>
           <Card.Title>Booking</Card.Title>
           <Card.Text>Location: {card.venue}</Card.Text>
@@ -89,11 +122,13 @@ function UpcomingBooking() {
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  <div>
-    <h1>Upcoming Bookings</h1>
-    <h2>Below are your upcoming bookings</h2>
-    <div className="grid">{timeslots.map(renderCard)}</div>;
-  </div>
+
+    <div className="bg-light border-top mt-4">
+    <h1  class= "bg-light fw-normal fs-20 bold text-center mt-2">Upcoming Bookings</h1>
+    <h2 class= "bg-light  fw-normal fs-20 bold text-center mb-4">Below are your upcoming bookings</h2>
+    </div>
+    <div className="grid text-center">{timeslots.map(renderCard)}</div>;
+  
   </div>
   );
 };

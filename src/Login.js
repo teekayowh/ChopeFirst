@@ -41,7 +41,7 @@ function Login() {
               <label for="floatingPassword">Password</label>
               </div>
               <div class="d-grid mb-2">
-                <button class="btn btn-primary btn-login text-uppercase fw-bold"  onClick={() => email.includes("@u.nus.edu") ? logInWithEmailAndPassword(email, password) : alert("Please only sign in with your NUS email")}>Sign
+                <button class="btn btn-primary btn-login text-uppercase fw-bold"  onClick={() => email.toLowerCase().includes("@u.nus.edu") ? logInWithEmailAndPassword(email, password) : alert("Please only sign in with your NUS email")}>Sign
                   in</button>
               </div>
               <hr class="my-4"></hr>

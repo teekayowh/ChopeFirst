@@ -64,7 +64,7 @@ function Statistics() {
     } else {
       // User is signed out
       // ...
-      return navigate("/login");
+      return navigate("/");
     }
   });
 

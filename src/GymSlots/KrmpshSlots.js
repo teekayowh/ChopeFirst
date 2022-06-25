@@ -98,7 +98,7 @@ const [double, setDouble] = useState(undefined)
 
   function handleSubmit() {
     if (double === undefined || double !== day["day"]) {
-      updateCapacity("krmpsh", day, {'startDate': day["day"], 'format': 'MMMM Do YYYY, h:mm:ss A'})
+      updateCapacity("krmpsh", day, {'startDate': day["day"], 'format': 'MMMM Do YYYY, h:mm:ss A'}, true)
       createBookings(user.uid, "Krmpsh" , {'start': startDate, 'end': endDate})
       updateTimeslots("krmpsh", startTime, false);
       setDouble(day["day"])

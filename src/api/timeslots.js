@@ -49,7 +49,7 @@ async function quickPop(name) {
     getDoc(data).then((doc) => updateDoc(data2, doc.data()));
 }
 
-async function updateCapacity(name, key, day) {
+async function updateCapacity(name, key, day, bool) {
     const dayz = key["day"];
     console.log(key)
     const data = doc(db, "capacity", name);
@@ -66,10 +66,13 @@ async function updateCapacity(name, key, day) {
             console.log(capacity);
             console.log(dayz)
             if (capacity === undefined) {
-                day["capacity"] = 10;
+                day["capacity"] = 9;
+                updateDoc(data, {[dayz]:day});
+            } else if(bool === true) {
+                day["capacity"] = capacity-1;
                 updateDoc(data, {[dayz]:day});
             } else {
-                day["capacity"] = capacity-1;
+                day["capacity"] = capacity+1;
                 updateDoc(data, {[dayz]:day});
             }
         }
