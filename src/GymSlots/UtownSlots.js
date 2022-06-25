@@ -2,7 +2,7 @@ import "./UtownSlots.css";
 import ReactTimeslotCalendar from "react-timeslot-calendar";
 import moment from "moment";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, logout } from "../firebase";
+import { auth, logout, db } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
   getTimeslots, updateTimeslots, updateCapacity, checkCapacity
@@ -13,9 +13,29 @@ import{
 import { useState, useEffect } from "react";
 import Navbar from 'react-bootstrap/Navbar';
 import { Container, Nav, NavDropdown } from "react-bootstrap";
+import { query, collection, getDocs, where } from "firebase/firestore";
 
 
 function UtownSlots() {
+  const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
+  const fetchUserName = async () => {
+    try {
+      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+      const doc = await getDocs(q);
+      const data = doc.docs[0].data();
+      setName(data.name);
+    } catch (err) {
+      console.error(err);
+      alert("An error occured while fetching user data");
+    }
+  };
+  useEffect(() => {
+    if (loading) return;
+    if (!user) return navigate("/");
+    fetchUserName();
+  }, [user, loading]);
   const [timeslots, setTimeslots] = useState([])
   const [disabled, setDisabled] = useState([])
 
@@ -67,7 +87,7 @@ function UtownSlots() {
   
 
 
-const [user] = useAuthState(auth);
+
  
 const [startDate, setStart] = useState(0);
 const [endDate, setEnd] = useState(0);
@@ -78,7 +98,7 @@ const [day, setDay] = useState(0);
   function handleSubmit() {
     updateCapacity("utown", day, {'startDate': day["day"], 'format': 'MMMM Do YYYY, h:mm:ss A'})
     createBookings(user.uid, "utown" , {'start': startDate, 'end': endDate})
-    updateTimeslots("utown", startTime);
+    updateTimeslots("utown", startTime, false);
     alert("Booking has been made")
   }
 
@@ -105,7 +125,7 @@ const [day, setDay] = useState(0);
             <Nav.Link as={Link} to="/home">Facilities</Nav.Link>
             <Nav.Link href="#link">Announcements</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Upcoming Bookings</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/upcomingBooking">Upcoming Bookings</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/statistics">Statistics</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Contact us</NavDropdown.Item>
               <NavDropdown.Divider />
@@ -115,9 +135,9 @@ const [day, setDay] = useState(0);
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    <div className="UtownSlots">
-      <h1>University Town Gym</h1>
-      <h2>Operating Hours: 7am - 9pm</h2>
+    <div className="bg-light border-top mt-4">
+    <h1  class= "bg-light fw-normal fs-20 bold text-center">University Town Gym</h1>
+    <h2 class= "bg-light  fw-normal fs-20 bold text-center">Operating Hours: 7am - 9pm</h2>
       <ReactTimeslotCalendar
         initialDate={moment().format("YYYY-MM-DD")}
         let
@@ -127,12 +147,12 @@ const [day, setDay] = useState(0);
         }}
         disabledTimeslots = {disabled}
       />
+      </div>
 
       <div class="mt-md-4 text-center">
         <button class="btn btn-primary text-uppercase fw-bold" onClick={handleSubmit}>Submit
         </button>
       </div>
-    </div>
     </div>
   );
 }

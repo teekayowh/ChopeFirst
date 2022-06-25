@@ -19,16 +19,23 @@ async function getTimeslots(name) {
 }
 
 
-async function updateTimeslots(name, start) {
+async function updateTimeslots(name, start, increase) {
     const data = doc(db, "timeslots", name);
     getDoc(data).then(
         async function update(doc) {
             const detail = doc.data();
             for (const item in detail) {
+                console.log(detail[item]["start"]);
                 if (detail[item]["start"] === start["startTime"]) {
-                    detail[item]["capacity"] = detail[item]["capacity"] -1;
-                    console.log(detail[item]);
-                    setDoc(data, detail);
+                    if (increase === true) {
+                        detail[item]["capacity"] = detail[item]["capacity"] +1;
+                        console.log(detail[item]);
+                        setDoc(data, detail);   
+                    } else {
+                        detail[item]["capacity"] = detail[item]["capacity"] -1;
+                        console.log(detail[item]);
+                        setDoc(data, detail);    
+                    }
                 }
             }
         }
@@ -81,6 +88,7 @@ async function checkCapacity(name) {
     return docSnap.data();
 
 }
+
 
 export {
     getTimeslots,

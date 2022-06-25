@@ -13,6 +13,7 @@ import KrmpshSlots from "./GymSlots/KrmpshSlots";
 import OutreachSlots from "./GymSlots/OutreachSlots";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Statistics from './Statistics';
+import UpcomingBooking from './UpcomingBooking';
 
 
 function App() {
@@ -20,7 +21,8 @@ function App() {
   <div className="app">
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<Login />} />
+    <Route path="/" element={<Login />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/reset" element={<Reset />} />
       <Route path ="/home" element={<Home />} />
@@ -30,6 +32,7 @@ function App() {
       <Route path ="/outreachSlots" element={<OutreachSlots />} />
       <Route path ="/outreachSlots" element={<OutreachSlots />} />
       <Route path ="/statistics" element={<Statistics />} />
+      <Route path ="/upcomingbooking" element={<UpcomingBooking />} />
       {/* <Route path="/dashboard" element={<Dashboard />} /> */}
     </Routes>
   </BrowserRouter>

@@ -41,7 +41,7 @@ function Home() {
             <Nav.Link as={Link} to="/home">Facilities</Nav.Link>
             <Nav.Link href="#link">Announcements</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Upcoming Bookings</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/upcomingBooking">Upcoming Bookings</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/statistics">Statistics</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Contact us</NavDropdown.Item>
               <NavDropdown.Divider />
@@ -62,9 +62,9 @@ function Home() {
             <MDBCardBody>
               <MDBCardTitle>USC Gym</MDBCardTitle>
               <MDBCardText>
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+              Max Capacity: 10
               </MDBCardText>
-              <MDBBtn href='/uscSlots'>Button</MDBBtn>
+              <MDBBtn href='/uscSlots'>Book</MDBBtn>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
@@ -76,9 +76,9 @@ function Home() {
             <MDBCardBody>
               <MDBCardTitle>U Town Gym</MDBCardTitle>
               <MDBCardText>
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+              Max Capacity: 10
               </MDBCardText>
-              <MDBBtn href='/utownSlots'>Button</MDBBtn>
+              <MDBBtn href='/utownSlots'>Book</MDBBtn>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
@@ -90,9 +90,9 @@ function Home() {
             <MDBCardBody>
               <MDBCardTitle>Wellness Outreach Gym</MDBCardTitle>
               <MDBCardText>
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+              Max Capacity: 10
               </MDBCardText>
-              <MDBBtn href='/outreachSlots'>Button</MDBBtn>
+              <MDBBtn href='/outreachSlots'>Book</MDBBtn>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>
@@ -104,9 +104,9 @@ function Home() {
             <MDBCardBody>
               <MDBCardTitle>Kent Ridge Fitness Gym @ MPSH 3</MDBCardTitle>
               <MDBCardText>
-                Some quick example text to build on the card title and make up the bulk of the card's content.
+              Max Capacity: 10
               </MDBCardText>
-              <MDBBtn href='/krmpshSlots'>Button</MDBBtn>
+              <MDBBtn href='/krmpshSlots'>Book</MDBBtn>
             </MDBCardBody>
           </MDBCard>
         </MDBCol>

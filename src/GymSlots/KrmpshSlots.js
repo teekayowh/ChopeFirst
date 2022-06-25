@@ -2,7 +2,7 @@ import "./KrmpshSlots.css";
 import ReactTimeslotCalendar from "react-timeslot-calendar";
 import moment from "moment";
 import { Link, useNavigate } from "react-router-dom";
-import { auth, logout } from "../firebase";
+import { auth, logout, db } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import {
   getTimeslots, updateTimeslots, updateCapacity, checkCapacity
@@ -13,12 +13,32 @@ import{
 import { useState, useEffect } from "react";
 import Navbar from 'react-bootstrap/Navbar';
 import { Container, Nav, NavDropdown } from "react-bootstrap";
+import { query, collection, getDocs, where } from "firebase/firestore";
 
 
 
 function KrmpshSlots() {
   const [timeslots, setTimeslots] = useState([])
   const [disabled, setDisabled] = useState([])
+  const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
+  const fetchUserName = async () => {
+    try {
+      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+      const doc = await getDocs(q);
+      const data = doc.docs[0].data();
+      setName(data.name);
+    } catch (err) {
+      console.error(err);
+      alert("An error occured while fetching user data");
+    }
+  };
+  useEffect(() => {
+    if (loading) return;
+    if (!user) return navigate("/");
+    fetchUserName();
+  }, [user, loading]);
 
   function compare(a,b) {
   
@@ -68,7 +88,7 @@ function KrmpshSlots() {
   
 
 
-const [user] = useAuthState(auth);
+
  
 const [startDate, setStart] = useState(0);
 const [endDate, setEnd] = useState(0);
@@ -80,7 +100,7 @@ const [double, setDouble] = useState(undefined)
     if (double === undefined || double !== day["day"]) {
       updateCapacity("krmpsh", day, {'startDate': day["day"], 'format': 'MMMM Do YYYY, h:mm:ss A'})
       createBookings(user.uid, "Krmpsh" , {'start': startDate, 'end': endDate})
-      updateTimeslots("krmpsh", startTime);
+      updateTimeslots("krmpsh", startTime, false);
       setDouble(day["day"])
       console.log(double)
       alert("Booking has been made")
@@ -118,7 +138,7 @@ const [double, setDouble] = useState(undefined)
             <Nav.Link as={Link} to="/home">Facilities</Nav.Link>
             <Nav.Link href="#link">Announcements</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Upcoming Bookings</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/upcomingBooking">Upcoming Bookings</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/statistics">Statistics</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Contact us</NavDropdown.Item>
               <NavDropdown.Divider />
@@ -128,9 +148,10 @@ const [double, setDouble] = useState(undefined)
         </Navbar.Collapse>
       </Container>
     </Navbar>
-    <div className="KrmpshSlots">
-      <h1>Kent Ridge MPSH Gym</h1>
-      <h2>Operating Hours: 7am - 9pm</h2>
+    <div className="bg-light border-top mt-4">
+      
+      <h1  class= "bg-light fw-normal fs-20 bold text-center"> Kent Ridge MPSH Gym</h1>
+      <h2 class= "bg-light  fw-normal fs-20 bold text-center">Operating Hours: 7am - 9pm</h2>
       <ReactTimeslotCalendar
         initialDate={moment().format("YYYY-MM-DD")}
         let
@@ -142,13 +163,14 @@ const [double, setDouble] = useState(undefined)
         }}
         disabledTimeslots = {disabled}
       />
+      </div>
 
       <div class="mt-md-4 text-center">
         <button class="btn btn-primary text-uppercase fw-bold" onClick={handleSubmit} >Submit
         </button>
       </div>
     </div>
-    </div>
+    
   );
 }
 

@@ -1,25 +1,95 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword, signInWithGoogle, db, logout } from "./firebase";
+import { query, collection, getDocs, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getBookings } from "./api/bookings";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getBookings, getName } from "./api/bookings";
 import Navbar from 'react-bootstrap/Navbar';
 import { Container, Nav, NavDropdown } from "react-bootstrap";
 import "./Statistics.css";
+
 function Statistics() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const auth = getAuth();
   const [user, loading, error] = useAuthState(auth);
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (loading) {
-      // maybe trigger a loading screen
-      return;
+  const [name, setName] = useState("");
+
+  const fetchUserName = async () => {
+    try {
+      const q = query(collection(db, "users"), where("uid", "==", user?.uid));
+      const doc = await getDocs(q);
+      const data = doc.docs[0].data();
+      setName(data.name);
+    } catch (err) {
+      console.error(err);
+      alert("An error occured while fetching user data");
     }
-    if (user) navigate("/statistics");
+  };
+  useEffect(() => {
+    if (loading) return;
+    if (!user) return navigate("/");
+    fetchUserName();
   }, [user, loading]);
+  const [timeslots, setTimeslots] = useState([])
+  const [disabled, setDisabled] = useState([])
+  const [userid, setID] = useState("");
+  const [coll, setColl] = useState([])
+ // const [user, setUser] = useState(|)
+  const navigate = useNavigate();
+  
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in, see docs for a list of available properties
+      // https://firebase.google.com/docs/reference/js/firebase.User
+      console.log(user)
+      const uid = user.uid;
+      const email = user.email;
+      const name = getName(uid);
+      getBookings().then(doc => {
+        getName(uid).then(one =>{  
+          console.log(one);
+          var colle = [];      
+          for (const item in doc) {
+            if (doc[item]["userId"] === uid) {
+              doc[item]["email"] = email;
+              doc[item]["name"] = one;
+              colle.push(doc[item]); 
+          }
+        }
+        setColl(colle)
+      }
+        )
+      })
+      // ...
+    } else {
+      // User is signed out
+      // ...
+      return navigate("/login");
+    }
+  });
+
+  
 
   const [postData, setPostData] = useState("");
+  function GenerateTable() {
+        console.log(coll);
+        const listItems = coll.map( (element) => { 
+          return ( 
+              <div class="border-bottom mt-3"> 
+                  <p class="text-justify">
+                      {element.name} has booked a gym slot at {element.venue} from {element.timeslot.start.startDate} to  {element.timeslot.end.endDate}
+                  </p> 
+              </div> 
+          ) 
+        } 
+      )
+      return (
+        <div>
+          {listItems}
+        </div>
+      )
+  }
+
   
 
   return (
@@ -33,7 +103,7 @@ function Statistics() {
             <Nav.Link as={Link} to="/home">Facilities</Nav.Link>
             <Nav.Link href="#link">Announcements</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Upcoming Bookings</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/upcomingBooking">Upcoming Bookings</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/statistics">Statistics</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Contact us</NavDropdown.Item>
               <NavDropdown.Divider />
@@ -53,38 +123,10 @@ function Statistics() {
             </div>
             <div class="card-body no-padding">
               <div class="item">
-                <div class="row">
-                  <div class="col-4 date-holder text-right">
-                    <div class="icon"><i class="fa fa-clock-o"></i></div>
-                    <div class="date"> <span>6:00 am</span><br></br><span class="text-info">6 hours ago</span></div>
+                  <div class="row">
+                  <div>
+                    <GenerateTable />
                   </div>
-                  <div class="col-8 content">
-                    <h5>Meeting</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="row">
-                  <div class="col-4 date-holder text-right">
-                    <div class="icon"><i class="fa fa-clock-o"></i></div>
-                    <div class="date"> <span>6:00 am</span><br></br><span class="text-info">6 hours ago</span></div>
-                  </div>
-                  <div class="col-8 content">
-                    <h5>Meeting</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>
-                  </div>
-                </div>
-              </div>
-              <div class="item">
-                <div class="row">
-                  <div class="col-4 date-holder text-right">
-                    <div class="icon"><i class="fa fa-clock-o"></i></div>
-                    <div class="date"> <span>6:00 am</span><br></br><span class="text-info">6 hours ago</span></div>
-                  </div>
-                  <div class="col-8 content">
-                    <h5>Meeting</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud.</p>
                   </div>
                 </div>
               </div>
@@ -94,7 +136,7 @@ function Statistics() {
         </div>
         </div>
         </div>
-        </div>
+      
 
         
 
