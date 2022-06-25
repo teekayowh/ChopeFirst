@@ -2,7 +2,7 @@ import {
     db
 } from '../firebase.js'
 
-import { doc, getDoc, setDoc, collection } from "firebase/firestore";
+import { doc, getDoc, setDoc, collection, deleteDoc } from "firebase/firestore";
 
 async function getBookings() {
     const timeslotsRef = doc(db, "bookings");
@@ -30,9 +30,11 @@ async function createBookings(userId, venue, timeslot) {
 }
 
 async function deleteBooking(bookingId) {
-
+    await deleteDoc(doc(db, "bookings", bookingId));
 }
 
 export {
-    createBookings
+    getBookings,
+    createBookings,
+    deleteBooking
 }

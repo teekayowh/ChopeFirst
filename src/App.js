@@ -11,6 +11,7 @@ import UtownSlots from "./GymSlots/UtownSlots";
 import UscSlots from "./GymSlots/UscSlots";
 import KrmpshSlots from "./GymSlots/KrmpshSlots";
 import OutreachSlots from "./GymSlots/OutreachSlots";
+import UpcomingBooking from "./UpcomingBooking"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -27,6 +28,7 @@ function App() {
       <Route path ="/uscSlots" element={<UscSlots />} />
       <Route path ="/krmpshSlots" element={<KrmpshSlots />} />
       <Route path ="/outreachSlots" element={<OutreachSlots />} />
+      <Route path ="/upcomingBooking" element={<UpcomingBooking />} />
       {/* <Route path="/dashboard" element={<Dashboard />} /> */}
     </Routes>
   </BrowserRouter>

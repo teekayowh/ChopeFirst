@@ -1,51 +1,72 @@
-import "./KrmpshSlots.css";
-import ReactTimeslotCalendar from "react-timeslot-calendar";
-import moment from "moment";
+import "./UpcomingBooking.css";
+// import ReactTimeslotCalendar from "react-timeslot-calendar";
+// import moment from "moment";
 import {
-  getTimeslots
-} from '../api/timeslots'
+  getTimeslots, updateTimeslots
+} from './api/timeslots'
 import{
-  createBookings
-} from '../api/bookings'
+  createBookings, getBookings, deleteBooking
+} from './api/bookings'
 import { useState, useEffect } from "react";
+import { Card, Button } from "react-bootstrap";
 
 function UpcomingBooking() {
   const [timeslots, setTimeslots] = useState([])
+  const [keys, setKeys] = useState([])
 
   useEffect(() => {
-    getTimeslots().then((slots) => {
+    getBookings().then((slots) => {
       var temp = []
       for (var slot in slots) {
-        if (slots[slot]['capacity'] > 0) {
-          console.log(slots[slot]['capacity']);
-          temp.push([slots[slot]['start'].toString(), slots[slot]['end'].toString()])
+        if (slots[slot]['userId'] === "test") {
+          temp.push(slots[slot]);
+          // console.log(Object.keys(slots));
+          // console.log(slots[slot]);
+          // console.log(slots[slot]['venue']);
+          // console.log(slots[slot]['timeslot']['start']);
+          // console.log(slots[slot]['timeslot']['end']);
+          // console.log(slots[slot]['timeslot']['date']);
+          // temp.push([slots[slot]['start'].toString(), slots[slot]['end'].toString()])
         }
       }
       setTimeslots(temp)
+      setKeys(Object.keys(slots))
     })
   }, [])
 
-  function handleSubmit() {
-    createBookings('test', 'testVenue', {'start': '7', 'end': '9'})
-  }
+  console.log(timeslots);
+
+  const renderCard = (card, index) => {
+    function handleSubmit() {
+      console.log(keys[index], keys)
+      deleteBooking(keys[index]).then(value => {
+        var temp = timeslots.slice();
+        temp.splice(index, 1)
+        updateTimeslots('krmpsh', 'slot1', true)
+        setTimeslots(temp);
+      })
+    }
+
+    return (
+      <Card style={{ width: "18rem" }} key={index} className="box">
+        <Card.Body>
+          <Card.Title>Booking</Card.Title>
+          <Card.Text>Location: {card.venue}</Card.Text>
+          <Card.Text>Date: {card.timeslot.date}</Card.Text>
+          <Card.Text>Timing: {card.timeslot.start}00 - {card.timeslot.end}00 hours</Card.Text>
+          <Button variant="primary" onClick={handleSubmit}>Delete</Button>
+        </Card.Body>
+      </Card>
+    );
+  };
 
   return (
-    <div className="KrmpshSlots">
-
-      <button onClick={handleSubmit}>Book</button>
-      <h1>Kent Ridge MPSH Gym</h1>
-      <h2>Operating Hours: 7am - 9pm</h2>
-      <ReactTimeslotCalendar
-        initialDate={moment().format("YYYY-MM-DD")}
-        let
-        timeslots={timeslots} 
-        onSelectTimeslot = {(allTimeslots, lastSelectedTimeslot) => {
-          console.log(lastSelectedTimeslot.startDate);  // MomentJS object.
- 
-        }}
-      />
-    </div>
+  <div>
+    <h1>Upcoming Bookings</h1>
+    <h2>Below are your upcoming bookings</h2>
+    <div className="grid">{timeslots.map(renderCard)}</div>;
+  </div>
   );
-}
+};
 
-export default KrmpshSlots;
+export default UpcomingBooking;

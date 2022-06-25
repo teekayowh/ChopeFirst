@@ -38,7 +38,7 @@ const [endTime, setEndtime] = useState(0);
 
   function handleSubmit() {
     createBookings(user.uid, "Krmpsh" , {'start': startDate, 'end': endDate})
-    updateTimeslots("krmpsh", startTime);
+    updateTimeslots("krmpsh", startTime, false);
     alert("Booking has been made")
   }
 
