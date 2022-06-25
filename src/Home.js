@@ -39,7 +39,7 @@ function Home() {
             <Nav.Link href="#link">Facilities</Nav.Link>
             <Nav.Link href="#link">Announcements</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
-              <NavDropdown.Item href="/upcomingBookings">Upcoming Bookings</NavDropdown.Item>
+              <NavDropdown.Item href="/upcomingBooking">Upcoming Bookings</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Statistics</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Contact us</NavDropdown.Item>
               <NavDropdown.Divider />

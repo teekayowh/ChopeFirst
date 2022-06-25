@@ -18,10 +18,10 @@ function UpcomingBooking() {
     getBookings().then((slots) => {
       var temp = []
       for (var slot in slots) {
-        if (slots[slot]['userId'] === "test") {
+        if (slots[slot]['userId'] === "59jvuZrl5RPGpYDTMoWvrD324cd2") {
           temp.push(slots[slot]);
-          // console.log(Object.keys(slots));
-          // console.log(slots[slot]);
+          console.log(Object.keys(slots));
+          console.log(slots[slot]);
           // console.log(slots[slot]['venue']);
           // console.log(slots[slot]['timeslot']['start']);
           // console.log(slots[slot]['timeslot']['end']);
@@ -47,13 +47,15 @@ function UpcomingBooking() {
       })
     }
 
+    console.log(card.timeslot.start.startDate.toString());
+
     return (
       <Card style={{ width: "18rem" }} key={index} className="box">
         <Card.Body>
           <Card.Title>Booking</Card.Title>
           <Card.Text>Location: {card.venue}</Card.Text>
-          <Card.Text>Date: {card.timeslot.date}</Card.Text>
-          <Card.Text>Timing: {card.timeslot.start}00 - {card.timeslot.end}00 hours</Card.Text>
+          <Card.Text>Start: {card.timeslot.start.startDate.toString()}</Card.Text>
+          <Card.Text>End: {card.timeslot.end.endDate.toString()} </Card.Text>
           <Button variant="primary" onClick={handleSubmit}>Delete</Button>
         </Card.Body>
       </Card>
