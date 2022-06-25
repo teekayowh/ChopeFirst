@@ -34,5 +34,6 @@ async function deleteBooking(bookingId) {
 }
 
 export {
-    createBookings
+    createBookings,
+    getBookings
 }

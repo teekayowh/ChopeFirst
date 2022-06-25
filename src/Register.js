@@ -16,7 +16,9 @@ function Register() {
   const register = () => {
     if (!name) alert("Please enter name");
     if (!email.includes("@u.nus.edu")) alert("Please only register with your NUS email");
+    if (email.includes("@u.nus.edu")){
     registerWithEmailAndPassword(name, email, password);
+    }
   };
   useEffect(() => {
     if (loading) return;

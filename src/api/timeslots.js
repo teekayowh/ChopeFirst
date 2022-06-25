@@ -25,7 +25,6 @@ async function updateTimeslots(name, start) {
         async function update(doc) {
             const detail = doc.data();
             for (const item in detail) {
-                console.log(detail[item]["start"]);
                 if (detail[item]["start"] === start["startTime"]) {
                     detail[item]["capacity"] = detail[item]["capacity"] -1;
                     console.log(detail[item]);
@@ -43,8 +42,50 @@ async function quickPop(name) {
     getDoc(data).then((doc) => updateDoc(data2, doc.data()));
 }
 
+async function updateCapacity(name, key, day) {
+    const dayz = key["day"];
+    console.log(key)
+    const data = doc(db, "capacity", name);
+    getDoc(data).then(
+        async function update(doc) {
+            const detail = doc.data();
+            var capacity = undefined;
+            for (const item in detail){
+                console.log(item)
+                if (item === dayz) {
+                    capacity = detail[item]["capacity"];
+                }
+            }
+            console.log(capacity);
+            console.log(dayz)
+            if (capacity === undefined) {
+                day["capacity"] = 10;
+                updateDoc(data, {[dayz]:day});
+            } else {
+                day["capacity"] = capacity-1;
+                updateDoc(data, {[dayz]:day});
+            }
+        }
+    )
+}
+
+async function checkCapacity(name) {
+    const capacityRef = doc(db, "capacity", name);
+    const docSnap = await getDoc(capacityRef);
+
+    if (!docSnap.exists()) {
+        console.log("No such document!");
+        return
+    }
+    
+    return docSnap.data();
+
+}
+
 export {
     getTimeslots,
     updateTimeslots,
-    quickPop
+    quickPop,
+    updateCapacity,
+    checkCapacity
 }
