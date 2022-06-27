@@ -1,5 +1,5 @@
 import "./OutreachSlots.css";
-import ReactTimeslotCalendar from "react-timeslot-calendar";
+import ReactTimeslotCalendar  from "../react-timeslot-calendar";
 import moment from "moment";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, logout, db } from "../firebase";
@@ -93,13 +93,22 @@ const [startDate, setStart] = useState(0);
 const [endDate, setEnd] = useState(0);
 const [startTime, setStarttime] = useState(0);
 const [day, setDay] = useState(0);
+const [double, setDouble] = useState(undefined);
 
 
   function handleSubmit() {
-    updateCapacity("outreach", day, {'startDate': day["day"], 'format': 'MMMM Do YYYY, h:mm:ss A'}, true)
-    createBookings(user.uid, "outreach" , {'start': startDate, 'end': endDate})
-    updateTimeslots("outreach", startTime, false);
-    alert("Booking has been made")
+    if (double === undefined || double !== day["day"]) {
+      updateCapacity("outreach", day, {'startDate': day["day"], 'format': 'MMMM Do YYYY, h:mm:ss A'}, true)
+      createBookings(user.uid, "outreach" , {'start': startDate, 'end': endDate})
+      updateTimeslots("outreach", startTime, false);
+      setDouble(day["day"])
+      console.log(double)
+      alert("Booking has been made")
+    }
+
+    else {
+        alert("Please only book one slot only once")
+    }
   }
 
   function takeNote(s ,e, d, f) {

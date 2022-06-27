@@ -1,5 +1,5 @@
 import "./KrmpshSlots.css";
-import ReactTimeslotCalendar from "react-timeslot-calendar";
+import ReactTimeslotCalendar  from "../react-timeslot-calendar";
 import moment from "moment";
 import { Link, useNavigate } from "react-router-dom";
 import { auth, logout, db } from "../firebase";

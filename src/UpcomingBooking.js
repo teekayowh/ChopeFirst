@@ -1,5 +1,4 @@
 import "./UpcomingBooking.css";
-import ReactTimeslotCalendar from "react-timeslot-calendar";
 import moment from "moment";
 import {
   getTimeslots, updateTimeslots, updateCapacity
