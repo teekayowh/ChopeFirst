@@ -17,7 +17,7 @@
     "react-dom": "^18.1.0",
     "react-firebase-hooks": "^5.0.3",
     "react-router-dom": "^6.0.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -45,7 +45,6 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.1.0",
     "cors": "^2.8.5",
     "express": "^4.17.1"
   }
