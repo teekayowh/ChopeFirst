@@ -14,6 +14,7 @@ import OutreachSlots from "./GymSlots/OutreachSlots";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Statistics from './Statistics';
 import UpcomingBooking from './UpcomingBooking';
+import Activities from './Activities';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
       <Route path ="/outreachSlots" element={<OutreachSlots />} />
       <Route path ="/statistics" element={<Statistics />} />
       <Route path ="/upcomingbooking" element={<UpcomingBooking />} />
+      <Route path ="/activities" element={<Activities />} />
       {/* <Route path="/dashboard" element={<Dashboard />} /> */}
     </Routes>
   </BrowserRouter>

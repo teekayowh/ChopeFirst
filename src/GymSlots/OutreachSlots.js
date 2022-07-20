@@ -126,7 +126,7 @@ const [double, setDouble] = useState(undefined);
 
   return (
     <div>
-    <Navbar bg="light" expand="lg">
+     <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Brand as={Link} to="/home">ChopeFirst</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -136,6 +136,7 @@ const [double, setDouble] = useState(undefined);
             <Nav.Link href="#link">Announcements</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/upcomingBooking">Upcoming Bookings</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/activities">Activities</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/statistics">Statistics</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Contact us</NavDropdown.Item>
               <NavDropdown.Divider />

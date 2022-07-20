@@ -99,7 +99,7 @@ const [double, setDouble] = useState(undefined)
   function handleSubmit() {
     if (double === undefined || double !== day["day"]) {
       updateCapacity("krmpsh", day, {'startDate': day["day"], 'format': 'MMMM Do YYYY, h:mm:ss A'}, true)
-      createBookings(user.uid, "Krmpsh" , {'start': startDate, 'end': endDate})
+      createBookings(user.uid, "krmpsh" , {'start': startDate, 'end': endDate})
       updateTimeslots("krmpsh", startTime, false);
       setDouble(day["day"])
       console.log(double)
@@ -139,6 +139,7 @@ const [double, setDouble] = useState(undefined)
             <Nav.Link href="#link">Announcements</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/upcomingBooking">Upcoming Bookings</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/activities">Activities</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/statistics">Statistics</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Contact us</NavDropdown.Item>
               <NavDropdown.Divider />

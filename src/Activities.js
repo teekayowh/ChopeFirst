@@ -3,13 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { auth, logInWithEmailAndPassword, signInWithGoogle, db, logout } from "./firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { fetchSignInMethodsForEmail, getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getBookings, getName } from "./api/bookings";
 import Navbar from 'react-bootstrap/Navbar';
 import { Container, Nav, NavDropdown } from "react-bootstrap";
-import "./Statistics.css";
+import "./Activities.css";
 
-function Statistics() {
+function Activities() {
   const auth = getAuth();
   const [user, loading, error] = useAuthState(auth);
   const [name, setName] = useState("");
@@ -36,8 +36,8 @@ function Statistics() {
   const [coll, setColl] = useState([])
  // const [user, setUser] = useState(|)
   const navigate = useNavigate();
-
-  useEffect(() =>onAuthStateChanged(auth, (user) => {
+  
+  onAuthStateChanged(auth, (user) => {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
@@ -66,42 +66,35 @@ function Statistics() {
       // ...
       return navigate("/");
     }
-  })
-  );
+  });
 
   
 
   const [postData, setPostData] = useState("");
-  function GenerateData() {
-        const determinant = {"krmpsh": 0, "outreach":0, "usc": 0, "utown": 0}
-        coll.map(item => {
-          if (item.timeslot.start.startDate.includes(new Date().toLocaleString('en-us', { month: 'long' }))) {
-            determinant[item.venue] = determinant[item.venue] +1 
-          }
-        }
-        )
-        console.log(determinant)
+  function GenerateTable() {
+        console.log(coll);
+        const listItems = coll.map( (element) => { 
+          return ( 
+              <div class="border-bottom mt-3"> 
+                  <p class="text-justify">
+                      {element.name} has booked a gym slot at {element.venue} from {element.timeslot.start.startDate} to  {element.timeslot.end.endDate}
+                  </p> 
+              </div> 
+          ) 
+        } 
+      )
       return (
-        <div class="border-bottom mt-2"> 
-          <p class="text-justify">
-            Visitied Kent Ridge Fitness Gym in {new Date().toLocaleString('en-us', { month: 'long' })}: {determinant['krmpsh']} times
-          </p>
-          <p class="text-justify">
-            Visitied Wellness Outreach Gym in {new Date().toLocaleString('en-us', { month: 'long' })}: {determinant['outreach']} times
-          </p>
-          <p class="text-justify">
-            Visitied USC Gym in {new Date().toLocaleString('en-us', { month: 'long' })}: {determinant['usc']} times
-          </p>
-          <p class="text-justify">
-            Visitied UTown Gym in {new Date().toLocaleString('en-us', { month: 'long' })} : {determinant['utown']} times
-          </p>
-        </div> 
+        <div>
+          {listItems}
+        </div>
       )
   }
+
   
+
   return (
     <div>
-       <Navbar bg="light" expand="lg">
+     <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Brand as={Link} to="/home">ChopeFirst</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -127,13 +120,13 @@ function Statistics() {
           <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-4 p-sm-5">
             <div class="card-header">
-              <h2 class="card-title text-center align-baseline mb-5 fw-light fs-5">Statistics</h2>
+              <h2 class="card-title text-center align-baseline mb-5 fw-light fs-5">Recent Activities</h2>
             </div>
             <div class="card-body no-padding">
               <div class="item">
                   <div class="row">
                   <div>
-                    <GenerateData />
+                    <GenerateTable />
                   </div>
                   </div>
                 </div>
@@ -144,6 +137,10 @@ function Statistics() {
         </div>
         </div>
         </div>
-    
-)};
-export default Statistics;
+      
+
+        
+
+  );
+  }
+export default Activities;

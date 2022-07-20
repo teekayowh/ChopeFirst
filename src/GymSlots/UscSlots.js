@@ -101,7 +101,7 @@ const [double, setDouble] = useState(undefined);
   function handleSubmit() {
     if (double === undefined || double !== day["day"]) {
       updateCapacity("usc", day, {'startDate': day["day"], 'format': 'MMMM Do YYYY, h:mm:ss A'}, true)
-      createBookings(user.uid, "outreach" , {'start': startDate, 'end': endDate})
+      createBookings(user.uid, "usc" , {'start': startDate, 'end': endDate})
       updateTimeslots("usc", startTime, false);
       setDouble(day["day"])
       console.log(double)
@@ -128,7 +128,7 @@ const [double, setDouble] = useState(undefined);
  
   return (
     <div>
-    <Navbar bg="light" expand="lg">
+     <Navbar bg="light" expand="lg">
       <Container>
         <Navbar.Brand as={Link} to="/home">ChopeFirst</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -138,6 +138,7 @@ const [double, setDouble] = useState(undefined);
             <Nav.Link href="#link">Announcements</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/upcomingBooking">Upcoming Bookings</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/activities">Activities</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/statistics">Statistics</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Contact us</NavDropdown.Item>
               <NavDropdown.Divider />
