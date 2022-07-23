@@ -5,6 +5,17 @@ import {
 import { doc, getDoc, setDoc, collection, getDocs, deleteDoc } from "firebase/firestore";
 import { query, where } from "firebase/firestore";
 
+async function updateHandle(userid, handle) {
+    const userData = {
+        userId: userid,
+        handle: handle 
+    };
+    const handleRef = doc(collection(db, "telegram"));
+    
+    await setDoc(handleRef, userData);
+        
+}
+
 async function getBookings() {
     // const timeslotsRef = doc(db, "bookings");
     // const docSnap = await getDoc(timeslotsRef);
@@ -65,5 +76,6 @@ export {
     createBookings,
     getBookings,
     deleteBooking,
-    getName
+    getName,
+    updateHandle
 }

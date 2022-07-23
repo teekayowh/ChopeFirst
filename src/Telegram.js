@@ -7,9 +7,11 @@ import { fetchSignInMethodsForEmail, getAuth, onAuthStateChanged } from "firebas
 import { getBookings, getName } from "./api/bookings";
 import Navbar from 'react-bootstrap/Navbar';
 import { Container, Nav, NavDropdown } from "react-bootstrap";
-import "./Statistics.css";
+import { updateHandle } from './api/bookings'
+import { doc, getDoc, setDoc, deleteDoc } from "firebase/firestore";
+import "./Telegram.css";
 
-function Statistics() {
+function Telegram() {
   const auth = getAuth();
   const [user, loading, error] = useAuthState(auth);
   const [name, setName] = useState("");
@@ -30,10 +32,8 @@ function Statistics() {
     if (!user) return navigate("/");
     fetchUserName();
   }, [user, loading]);
-  const [timeslots, setTimeslots] = useState([])
-  const [disabled, setDisabled] = useState([])
   const [userid, setID] = useState("");
-  const [coll, setColl] = useState([])
+  const [handle, setHandle] = useState([])
  // const [user, setUser] = useState(|)
   const navigate = useNavigate();
 
@@ -41,25 +41,7 @@ function Statistics() {
     if (user) {
       // User is signed in, see docs for a list of available properties
       // https://firebase.google.com/docs/reference/js/firebase.User
-      console.log(user)
-      const uid = user.uid;
-      const email = user.email;
-      const name = getName(uid);
-      getBookings().then(doc => {
-        getName(uid).then(one =>{  
-          console.log(one);
-          var colle = [];      
-          for (const item in doc) {
-            if (doc[item]["userId"] === uid) {
-              doc[item]["email"] = email;
-              doc[item]["name"] = one;
-              colle.push(doc[item]); 
-          }
-        }
-        setColl(colle)
-      }
-        )
-      })
+      setID(user.uid)
       // ...
     } else {
       // User is signed out
@@ -72,32 +54,14 @@ function Statistics() {
   
 
   const [postData, setPostData] = useState("");
-  function GenerateData() {
-        const determinant = {"krmpsh": 0, "outreach":0, "usc": 0, "utown": 0}
-        coll.map(item => {
-          if (item.timeslot.start.startDate.includes(new Date().toLocaleString('en-us', { month: 'long' }))) {
-            determinant[item.venue] = determinant[item.venue] +1 
-          }
-        }
-        )
-        console.log(determinant)
-      return (
-        <div class="border-bottom mt-2"> 
-          <p class="text-justify">
-            Visitied Kent Ridge Fitness Gym in {new Date().toLocaleString('en-us', { month: 'long' })}: {determinant['krmpsh']} times
-          </p>
-          <p class="text-justify">
-            Visitied Wellness Outreach Gym in {new Date().toLocaleString('en-us', { month: 'long' })}: {determinant['outreach']} times
-          </p>
-          <p class="text-justify">
-            Visitied USC Gym in {new Date().toLocaleString('en-us', { month: 'long' })}: {determinant['usc']} times
-          </p>
-          <p class="text-justify">
-            Visitied UTown Gym in {new Date().toLocaleString('en-us', { month: 'long' })} : {determinant['utown']} times
-          </p>
-        </div> 
-      )
+
+  function handleSubmit() {
+      updateHandle(userid, handle)
+      console.log(userid)
+      console.log(handle)
+      alert("Confirmed!")
   }
+
   
   return (
     <div>
@@ -122,28 +86,29 @@ function Statistics() {
       </Container>
     </Navbar>
     <div class="container">
-    <div class="row">   
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-          <div class="card border-0 shadow rounded-3 my-5">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-4 p-sm-5">
-            <div class="card-header">
-              <h2 class="card-title text-center align-baseline mb-5 fw-light fs-5">Statistics</h2>
-            </div>
-            <div class="card-body no-padding">
-              <div class="item">
-                  <div class="row">
-                  <div>
-                    <GenerateData />
-                  </div>
-                  </div>
-                </div>
+            <h5 class="card-title text-center mb-5 fw-light fs-5">Input Your Telegram Handle To Receive Notifications From Our Bot</h5>
+              <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control" id="floatingInput" 
+                value={handle}
+                onChange={(e) => setHandle(e.target.value)}
+              />
+              <label for="floatingInput">Telegram Handle</label>
               </div>
-            </div>
+              <div class="d-grid mb-2">
+                <button class="btn btn-primary btn-login text-uppercase fw-bold"  onClick={handleSubmit}>Confirm</button>
+              </div>
           </div>
         </div>
-        </div>
-        </div>
-        </div>
+      </div>
+    </div>
+    </div>
+    </div>
     
 )};
-export default Statistics;
+export default Telegram;

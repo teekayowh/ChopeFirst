@@ -110,7 +110,7 @@ function UpcomingBooking() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link as={Link} to="/home">Facilities</Nav.Link>
-            <Nav.Link href="#link">Announcements</Nav.Link>
+            <Nav.Link as={Link} to="/telegram">Receive Updates On Telegram</Nav.Link>
             <NavDropdown title="Account" id="basic-nav-dropdown">
               <NavDropdown.Item as={Link} to="/upcomingBooking">Upcoming Bookings</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/activities">Activities</NavDropdown.Item>

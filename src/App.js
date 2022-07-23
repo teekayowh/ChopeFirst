@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Statistics from './Statistics';
 import UpcomingBooking from './UpcomingBooking';
 import Activities from './Activities';
+import Telegram from './Telegram';
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
       <Route path ="/statistics" element={<Statistics />} />
       <Route path ="/upcomingbooking" element={<UpcomingBooking />} />
       <Route path ="/activities" element={<Activities />} />
+      <Route path ="/telegram" element={<Telegram />} />
       {/* <Route path="/dashboard" element={<Dashboard />} /> */}
     </Routes>
   </BrowserRouter>
