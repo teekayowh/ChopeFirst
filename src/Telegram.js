@@ -86,29 +86,29 @@ function Telegram() {
       </Container>
     </Navbar>
     <div class="container">
-    <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card border-0 shadow rounded-3 my-5">
+    <div class="row">   
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div class="card border-0 shadow rounded-3 my-5">
           <div class="card-body p-4 p-sm-5">
-            <h5 class="card-title text-center mb-5 fw-light fs-5">Input Your Telegram Handle To Receive Notifications From Our Bot</h5>
-              <div class="form-floating mb-3">
-              <input
-                type="text"
-                class="form-control" id="floatingInput" 
-                value={handle}
-                onChange={(e) => setHandle(e.target.value)}
-              />
-              <label for="floatingInput">Telegram Handle</label>
+            <div class="card-header">
+              <h2 class="card-title text-center align-baseline mb-5 fw-light fs-5">Receive Updates</h2>
+            </div>
+            <div class="card-body no-padding">
+              <div class="item">
+                  <div class="row">
+                  <div class="d-flex justify-content-center">
+                    Click Here To Receive Updates on Telegram!
+                  </div>
+                  <a href="https://t.me/chopefirst" class="d-flex justify-content-center">Telegram Channel</a>
+                  </div>
+                </div>
               </div>
-              <div class="d-grid mb-2">
-                <button class="btn btn-primary btn-login text-uppercase fw-bold"  onClick={handleSubmit}>Confirm</button>
-              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-    </div>
-    </div>
+        </div>
+        </div>
+        </div>
     
 )};
 export default Telegram;

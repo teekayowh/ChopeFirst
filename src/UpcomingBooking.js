@@ -14,6 +14,9 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Container, Nav, NavDropdown } from "react-bootstrap";
 import { auth, logInWithEmailAndPassword, signInWithGoogle, db, logout } from "./firebase";
 import { Link, useNavigate } from "react-router-dom";
+import{
+  updateAvail
+} from './api/telegram';
 import Navbar from 'react-bootstrap/Navbar';
 
 
@@ -80,6 +83,7 @@ function UpcomingBooking() {
         temp.splice(index, 1)
         updateTimeslots('krmpsh', 'slot1', true)
         setTimeslots(temp);
+        updateAvail("Slot available at " + card.venue + " at " + card.timeslot.start.startDate);
         updateCapacity(card.venue, {"day": card.timeslot.start.startDate}, {'startDate': card.timeslot.start.startDate, 'format': 'MMMM Do YYYY, h:mm:ss A'}, false)
       })
     }
