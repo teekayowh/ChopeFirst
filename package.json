@@ -49,5 +49,8 @@
   "devDependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1"
+  },
+  "engines": {
+    "node": "16.15.0"
   }
 }
